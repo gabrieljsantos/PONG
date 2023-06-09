@@ -27,12 +27,11 @@ O jogo Pong implementado neste projeto possui as seguintes funcionalidades:
 
 O jogo Pong faz uso de várias funções implementadas no arquivo `functions.py`. Aqui estão algumas das principais funções utilizadas:
 
-- `update_ball_position(delta_time)`: Atualiza a posição da bola com base no tempo decorrido desde a última atualização. Essa função é responsável pelo movimento da bola no jogo.
+- `update_ball_position(delta_time)`: Atualiza a posição da bola com base nas colisões. Essa função é responsável pelo movimento da bola no jogo.
 - `draw_racket_a()`, `draw_racket_b()`: Desenha as barras dos jogadores A e B na tela.
 - `move_racket_a()`, `move_racket_b()`: Controla o movimento das barras dos jogadores A e B com base nas teclas pressionadas pelos jogadores.
 - `draw_line_division()`: Desenha a linha de divisão no meio da tela para separar os campos dos jogadores.
 - `draw_score()`: Exibe a pontuação dos jogadores na tela.
-- `collision_detection()`: Detecta as colisões da bola com as barras dos jogadores e atualiza a direção da bola de acordo.
 
 ## Possíveis limitações
 
@@ -44,5 +43,5 @@ O jogo Pong implementado possui algumas limitações a serem consideradas:
 
 ## Oque pode ser feito com o projeto?
 - Edite, melhore, faça oque achar melhor!
-- entre em contato comigo pelo instagram gabriel_j.santos_ ou pelo link:
+- Entre em contato comigo pelo instagram gabriel_j.santos_ ou pelo link:
 [![Instagram](https://img.shields.io/badge/Instagram-Follow%20Me-%23E4405F?logo=instagram)](https://instagram.com/gabriel_j.santos_?igshid=NTc4MTIwNjQ2YQ==)
