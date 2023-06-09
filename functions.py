@@ -85,7 +85,6 @@ def win(ganhador):
         ball_speed_x , ball_speed_y = random.choice(ball_speed_start)
         ball_speed_x = - abs(ball_speed_x)
 
-
     ball_pos_x = size_tela_x/2
     ball_pos_y = size_tela_y/2
 
@@ -187,21 +186,22 @@ def move_paddles_b():
     global paddles_vel_max_b
     global paddles_size_y
     global decay_rate
-    
-    #ss=xx+yy
+    global ball_speed_x
+    global ball_speed_y
+    global collision_prediction_fluctuation
 
-    delta_y_ball_paddles = ball_pos_y - (1.5 * paddles_pos_b_y)
-    if delta_y_ball_paddles > 0 :
-        direction_move_b = 1
-    else:
-        direction_move_b = -1
+    collision_y = ((((size_tela_x-ball_pos_x)/ball_speed_x) * ball_speed_y) + ball_pos_y) + random.randint(-collision_prediction_fluctuation, collision_prediction_fluctuation)
+    pygame.draw.circle(tela, ball_color, (size_tela_x, int(collision_y)), raio/5)
+    
     if ball_speed_x > 0:
-        if (paddles_vel_b > 0 and direction_move_b < 0) or (paddles_vel_b < 0 and direction_move_b > 0):
-            paddles_vel_b += paddles_acel_b * 2 * direction_move_b
-        else:    
-            paddles_vel_b += paddles_acel_b * direction_move_b
+        if (paddles_pos_b_y > collision_y):
+            paddles_vel_b -= paddles_acel_b
+        elif (paddles_pos_b_y+paddles_size_y < collision_y):
+            paddles_vel_b += paddles_acel_b
+        else:
+            paddles_vel_b = paddles_vel_b - (paddles_vel_b * decay_rate)
     else:
-        paddles_vel_b = paddles_vel_b - (paddles_vel_b * decay_rate)
+        paddles_vel_b = paddles_vel_b - (paddles_vel_b * decay_rate/100)
     """if ball_speed_x > 0:
         if (paddles_vel_b > 0 and direction_move_b < 0) or (paddles_vel_b < 0 and direction_move_b > 0):
             paddles_vel_b += paddles_acel_b * 2 * direction_move_b

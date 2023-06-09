@@ -1,5 +1,6 @@
 from math import *
 from setup_tela import *
+
 raio = 12  # Raio da bola
 
 paddles_size_x = 10  # Largura da raquete
@@ -9,7 +10,7 @@ paddles_color_b = (255, 255, 255)  # Cor da raquete B
 paddles_pos_a_x = 0  # Posição x da raquete A
 paddles_pos_a_y = size_tela_y / 2  # Posição y inicial da raquete A
 paddles_pos_b_x = size_tela_x - paddles_size_x  # Posição x da raquete B
-paddles_pos_b_y = size_tela_y / 2 + paddles_size_y / 2  # Posição y inicial da raquete B
+paddles_pos_b_y = (size_tela_y / 2) - (paddles_size_y / 2)  # Posição y inicial da raquete B
 paddles_vel_b = 0  # Velocidade atual da raquete B
 paddles_vel_a = 0  # Velocidade atual da raquete A
 paddles_acel_a = 0.01  # Aceleração da raquete A
@@ -33,6 +34,8 @@ ball_speed_x = 15  # Velocidade da bola no eixo x (pixels/s)
 ball_speed_y = 23  # Velocidade da bola no eixo y (pixels/s)
 
 decay_rate = 0.1  # Taxa de decaimento da velocidade da raquete
+
+collision_prediction_fluctuation = 70 # +/-pixels
 
 ball_speed_start = [
     (24 + 3*sqrt(2), 14),
