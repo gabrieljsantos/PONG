@@ -1,6 +1,9 @@
 from math import *
-from setup_tela import *
+import pygame
 
+
+size_tela_x = 720
+size_tela_y = 576
 raio = 12  # Raio da bola
 
 paddles_size_x = 10  # Largura da raquete
@@ -18,10 +21,13 @@ paddles_acel_b = 0.01  # Aceleração da raquete B
 paddles_vel_max_a = 6  # Velocidade máxima da raquete A
 paddles_vel_max_b = 6  # Velocidade máxima da raquete B
 
-size_line_division_x = 7  # Largura das linhas de divisão
-n_dotted = 20  # Número de pontos nas linhas de divisão
-spacing = 4  # Espaçamento entre os pontos nas linhas de divisão
+size_strokes_division_x = 5  # Largura das linhas de divisão
+n_strokes = 20  # Número de pontos nas linhas de divisão
+spacing_percentage = 0.2  # Espaçamento entre os pontos nas linhas de divisão
 color_line_division = (255, 255, 255)  # Cor das linhas de divisão
+
+# Definir as cores
+background_color = (10, 10, 10)
 
 score_a = 0  # Pontuação do jogador A
 score_b = 0  # Pontuação do jogador B
@@ -34,8 +40,13 @@ ball_speed_x = 15  # Velocidade da bola no eixo x (pixels/s)
 ball_speed_y = 23  # Velocidade da bola no eixo y (pixels/s)
 
 decay_rate = 0.1  # Taxa de decaimento da velocidade da raquete
+collision_y = 0
 
-collision_prediction_fluctuation = 70 # +/-pixels
+lost_ball_speed_x, lost_ball_speed_y = 0 , 0
+delta_ball_speed= False
+
+collision_prediction_fluctuation = 35 # +/-pixels
+fluctuation_of_collision_prediction_fluctuation = 40 # +/-pixels
 
 ball_speed_start = [
     (24 + 3*sqrt(2), 14),
@@ -45,3 +56,14 @@ ball_speed_start = [
     (27,0)
 ]
 ##(2 + 2*sqrt(2), 27),(2 + 2*sqrt(2), -27),
+
+# Inicializar o Pygame
+pygame.init()
+
+# Definir as dimensões da tela
+
+
+# Criar a tela
+tela = pygame.display.set_mode((size_tela_x, size_tela_y))
+
+pygame.display.set_caption("PONG")

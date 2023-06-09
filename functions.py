@@ -1,4 +1,3 @@
-from setup_tela import*
 from setup import *
 from pygame.locals import *
 import random
@@ -23,7 +22,7 @@ def draw_score(): ## Desenhar a janela de Score
     fontesys=pygame.font.SysFont(fonte, size_fonte)
     score_o = fontesys.render(str(score_a) , 1, (score_value_color)) 
     largura_texto, altura_texto = score_o.get_size() # Obtenha as dimensões do texto
-    rect_texto = score_o.get_rect(centerx=((size_tela_x/2)-(largura_texto*2)), centery=50)# Crie um objeto Rect para centralizar o texto na posição
+    rect_texto = score_o.get_rect(centerx=((size_tela_x/2)-100), centery=50)# Crie um objeto Rect para centralizar o texto na posição
     tela.blit(score_o,rect_texto)
 
     ## definindo tamanho da fonte em função do valor de win_n_
@@ -39,7 +38,7 @@ def draw_score(): ## Desenhar a janela de Score
     fontesys=pygame.font.SysFont(fonte, size_fonte)
     score_x = fontesys.render(str(score_b) , 1, (score_value_color)) 
     largura_texto, altura_texto = score_x.get_size() # Obtenha as dimensões do texto
-    rect_texto = score_x.get_rect(centerx=((size_tela_x/2)+(largura_texto*2)), centery=50)# Crie um objeto Rect para centralizar o texto na posição
+    rect_texto = score_x.get_rect(centerx=((size_tela_x/2)+100), centery=50)# Crie um objeto Rect para centralizar o texto na posição
     tela.blit(score_x,rect_texto)
 
 def straight_speed():
@@ -52,18 +51,19 @@ def straight_speed():
 def draw_line_division():
     global size_tela_y
     global size_tela_x
-    global size_line_division_x
-    global n_dotted
-    global spacing
+    global size_strokes_division_x
+    global n_strokes
+    global spacing_percentage
     global color_line_division
-    i = 0
+    spacing = (size_tela_y*spacing_percentage)/n_strokes 
+    size_strokes_division_y = (size_tela_y - (size_tela_y * spacing_percentage)) / n_strokes
+    line_pos_x=(size_tela_x/2)-(size_strokes_division_x/2)
+
+    i=0
     while i < size_tela_y:
-        size_line_division_y = int((size_tela_y/n_dotted)-spacing)
-        line_pos_x=(size_tela_x/2)-(size_line_division_x/2)
-        line_pos_x=int(line_pos_x)
-        i += spacing
-        pygame.draw.rect(tela, color_line_division, (int(line_pos_x), int(i), size_line_division_x, size_line_division_y))
-        i += (size_tela_y/n_dotted)
+        i += spacing/2
+        pygame.draw.rect(tela, color_line_division, (int(line_pos_x), int(i), size_strokes_division_x, size_strokes_division_y))
+        i += size_strokes_division_y+(spacing/2)
 
 def win(ganhador):
     global score_a
@@ -88,7 +88,6 @@ def win(ganhador):
     ball_pos_x = size_tela_x/2
     ball_pos_y = size_tela_y/2
 
-    print(ganhador,score_a,score_b)
 
 def update_ball_position(delta_time):
     global ball_pos_x
@@ -104,7 +103,11 @@ def update_ball_position(delta_time):
     global score_b
     global paddles_vel_a
     global paddles_vel_b
+    global delta_ball_speed
+    
+    global lost_ball_speed_x, lost_ball_speed_y
 
+    lost_ball_speed_x, lost_ball_speed_y = ball_speed_x , ball_speed_y
 
     if (ball_pos_y+raio) >= size_tela_y or (ball_pos_y-raio) <= 0:
         ball_speed_y = ball_speed_y * -1
@@ -153,6 +156,11 @@ def update_ball_position(delta_time):
 
     pygame.draw.circle(tela, ball_color, (int(ball_pos_x), int(ball_pos_y)), raio)
 
+    if (ball_speed_x != lost_ball_speed_x) or (ball_speed_y != lost_ball_speed_y):
+        delta_ball_speed = True
+    else:
+        delta_ball_speed = False
+
 def move_paddles_a():
     keys = pygame.key.get_pressed()
     global paddles_pos_a_y
@@ -188,12 +196,16 @@ def move_paddles_b():
     global decay_rate
     global ball_speed_x
     global ball_speed_y
-    global collision_prediction_fluctuation
+    global collision_prediction_fluctuation, fluctuation_of_collision_prediction_fluctuation
+    global collision_y
 
-    collision_y = ((((size_tela_x-ball_pos_x)/ball_speed_x) * ball_speed_y) + ball_pos_y) + random.randint(-collision_prediction_fluctuation, collision_prediction_fluctuation)
+    if  delta_ball_speed == True:
+        b = collision_prediction_fluctuation + random.randint(-fluctuation_of_collision_prediction_fluctuation, fluctuation_of_collision_prediction_fluctuation)
+        collision_y = ((((size_tela_x-ball_pos_x)/ball_speed_x) * ball_speed_y) + ball_pos_y) + random.randint(-abs(b), abs(b))
+
     pygame.draw.circle(tela, ball_color, (size_tela_x, int(collision_y)), raio/5)
     
-    if ball_speed_x > 0:
+    if ball_speed_x > 0 or ball_pos_x > (size_tela_x/2):
         if (paddles_pos_b_y > collision_y):
             paddles_vel_b -= paddles_acel_b
         elif (paddles_pos_b_y+paddles_size_y < collision_y):

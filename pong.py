@@ -1,6 +1,4 @@
-from setup_tela import *
 from functions import *
-
 import time
 
 # Definir as dimensões dos quadradinhos
@@ -19,7 +17,7 @@ while jogo_ativo:
             jogo_ativo = False
 
     # Preencher a tela com a cor preta
-    tela.fill(preto)
+    tela.fill(background_color)
     
     ##straight_speed()
     update_ball_position(0.05)
