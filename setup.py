@@ -32,17 +32,13 @@ ball_pos_y = raio + 1 + paddles_size_y  # Posição y inicial da bola
 ball_speed_x = 15  # Velocidade da bola no eixo x (pixels/s)
 ball_speed_y = 23  # Velocidade da bola no eixo y (pixels/s)
 
-
-ball_speed_start_x = 13  # Velocidade inicial da bola no eixo x (pixels/s)
-ball_speed_start_y = 23  # Velocidade inicial da bola no eixo y (pixels/s)
 decay_rate = 0.1  # Taxa de decaimento da velocidade da raquete
 
 ball_speed_start = [
-    (2 + 2*sqrt(2), 27),
     (24 + 3*sqrt(2), 14),
     (24 + 3*sqrt(2), -14),
-    (2 + 2*sqrt(2), -27),
     (-19, -6*sqrt(3)),
     (-19, 6*sqrt(3)),
     (27,0)
 ]
+##(2 + 2*sqrt(2), 27),(2 + 2*sqrt(2), -27),

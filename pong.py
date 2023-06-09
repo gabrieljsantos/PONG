@@ -21,7 +21,7 @@ while jogo_ativo:
     # Preencher a tela com a cor preta
     tela.fill(preto)
     
-    straight_speed()
+    ##straight_speed()
     update_ball_position(0.05)
     draw_paddles_a()
     draw_paddles_b()

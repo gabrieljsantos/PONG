@@ -1,4 +1,4 @@
-from setup_tela import *
+from setup_tela import*
 from setup import *
 from pygame.locals import *
 import random
@@ -79,6 +79,7 @@ def win(ganhador):
     if ganhador == "a":
         score_a += 1
         ball_speed_x , ball_speed_y = random.choice(ball_speed_start)
+        ball_speed_x = abs(ball_speed_x)
     if ganhador == "b":
         score_b += 1
         ball_speed_x , ball_speed_y = random.choice(ball_speed_start)
@@ -105,25 +106,47 @@ def update_ball_position(delta_time):
     global paddles_vel_a
     global paddles_vel_b
 
+
     if (ball_pos_y+raio) >= size_tela_y or (ball_pos_y-raio) <= 0:
         ball_speed_y = ball_speed_y * -1
 
-    if ((ball_pos_x-raio) <= (0+paddles_size_x)) and ball_speed_x < 0:
-        if (ball_pos_y > paddles_pos_a_y) and (ball_pos_y < (paddles_pos_a_y + paddles_size_y)):
-            ball_speed_x = ball_speed_x * -1
-            ball_speed_y = ball_speed_y + (paddles_vel_a)
-        elif ball_pos_x < 0-raio:
-            win("b")
-    if ball_pos_x <= (0+paddles_size_x) and (ball_pos_x > (paddles_size_x)):
-        if (ball_pos_y > paddles_pos_a_y) and (ball_pos_y < (paddles_pos_a_y + paddles_size_y)):
-            ball_speed_x = paddles_vel_a
-            ball_speed_y = ball_speed_y * -1
-    if ((ball_pos_x+raio) >= (size_tela_x-paddles_size_x)) and ball_speed_x > 0:
-        if (ball_pos_y > paddles_pos_b_y) and (ball_pos_y < (paddles_pos_b_y + paddles_size_y)):
-            ball_speed_x = ball_speed_x * -1
-            ball_speed_y = ball_speed_y + (paddles_vel_b)
-        elif ball_pos_x > size_tela_x+raio:
-            win("a")
+    if ((ball_pos_x-raio) <= (0+paddles_size_x)) and (ball_speed_x < 0) and (ball_pos_y > paddles_pos_a_y) and (ball_pos_y < (paddles_pos_a_y + paddles_size_y)):
+        ball_speed_x = ball_speed_x * -1
+        ball_speed_y = ball_speed_y + (3*paddles_vel_a)
+    elif ball_pos_x < 0:
+        win("b")
+        
+    if (ball_pos_x) < (0+paddles_size_x) and (ball_pos_y >(paddles_pos_a_y)) and (ball_pos_y < (paddles_pos_a_y+paddles_size_y)):
+        ball_speed_y = (ball_speed_y*(-1)) + paddles_vel_a
+        if (ball_speed_y) > 0:
+            ball_pos_y = (paddles_pos_a_y+paddles_size_y)+ 1 
+        if (ball_speed_y) < 0:
+            ball_pos_y = (paddles_pos_a_y)- 1 
+    """if (ball_pos_y > (paddles_pos_a_y+paddles_size_y)) and (ball_pos_y < (paddles_pos_a_y+paddles_size_y+raio)) and (ball_pos_x > (paddles_pos_a_x+paddles_size_x)) and (ball_pos_x < (paddles_pos_a_x+paddles_size_x+raio)):
+        if ball_speed_x == 0 or ball_speed_y == 0:
+            n = ball_speed_x
+            ball_speed_x = -ball_speed_y
+            ball_speed_y = n
+        else:
+            ball_speed_x*=-1
+            ball_speed_y*=-1
+        if ball_speed_x != 0:
+            ball_pos_x+=(ball_speed_x/abs(ball_speed_x))
+        if ball_speed_y != 0:
+            ball_pos_y+=(ball_speed_y/abs(ball_speed_y))"""
+
+    if ((ball_pos_x+raio) >= (size_tela_x-paddles_size_x)) and (ball_speed_x > 0) and (ball_pos_y > paddles_pos_b_y) and (ball_pos_y < (paddles_pos_b_y + paddles_size_y)):
+        ball_speed_x = ball_speed_x * -1
+        ball_speed_y = ball_speed_y + (3*paddles_vel_b)
+    elif ball_pos_x > size_tela_x:
+        win("a")
+        
+    if (ball_pos_x) > (size_tela_x-paddles_size_x) and (ball_pos_y >(paddles_pos_b_y)) and (ball_pos_y < (paddles_pos_b_y+paddles_size_y)):
+        ball_speed_y = (ball_speed_y*(-1)) + paddles_vel_b
+        if (ball_speed_y) > 0:
+            ball_pos_y = (paddles_pos_b_y+paddles_size_y)+ 1 
+        if (ball_speed_y) < 0:
+            ball_pos_y = (paddles_pos_b_y)- 1
     
 
     ball_pos_x = ball_pos_x + (ball_speed_x * delta_time)
@@ -165,8 +188,9 @@ def move_paddles_b():
     global paddles_size_y
     global decay_rate
     
+    #ss=xx+yy
 
-    delta_y_ball_paddles = ball_pos_y - paddles_pos_b_y
+    delta_y_ball_paddles = ball_pos_y - (1.5 * paddles_pos_b_y)
     if delta_y_ball_paddles > 0 :
         direction_move_b = 1
     else:
@@ -178,6 +202,13 @@ def move_paddles_b():
             paddles_vel_b += paddles_acel_b * direction_move_b
     else:
         paddles_vel_b = paddles_vel_b - (paddles_vel_b * decay_rate)
+    """if ball_speed_x > 0:
+        if (paddles_vel_b > 0 and direction_move_b < 0) or (paddles_vel_b < 0 and direction_move_b > 0):
+            paddles_vel_b += paddles_acel_b * 2 * direction_move_b
+        else:    
+            paddles_vel_b += paddles_acel_b * direction_move_b
+    else:
+        paddles_vel_b = paddles_vel_b - (paddles_vel_b * decay_rate)"""
 
     if paddles_vel_b > paddles_vel_max_b:
         paddles_vel_b = paddles_vel_max_b

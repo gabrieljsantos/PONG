@@ -13,5 +13,5 @@ tela = pygame.display.set_mode((size_tela_x, size_tela_y))
 pygame.display.set_caption("PONG")
 
 # Definir as cores
-preto = (0, 0, 0)
+preto = (10, 10, 10)
 branco = (255, 255, 25)
