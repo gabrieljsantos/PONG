@@ -33,15 +33,17 @@ O jogo Pong faz uso de várias funções implementadas no arquivo `functions.py`
 - `draw_line_division()`: Desenha a linha de divisão no meio da tela para separar os campos dos jogadores.
 - `draw_score()`: Exibe a pontuação dos jogadores na tela.
 
-## Possíveis limitações
+## Limitações
 
 O jogo Pong implementado possui algumas limitações a serem consideradas:
-
+- Bug 1 - A bolinha entra dentro da raquete se a mesma e atigida nos lados, e como consequancia é rebatida.
+- Bug 2 - Ás vezes a bolinha é telestransportada para a outra extremidade da raquete se a  mesma é atingina nos cantos.
 - Apenas um modo de jogo: O jogo implementa apenas o modo de jogo jogador vs computador. Não há suporte para jogadores adicionais ou jogabilidade online.
 - Interface gráfica simples: A interface gráfica do jogo é minimalista, com elementos básicos desenhados na tela. Não há animações sofisticadas ou efeitos visuais avançados.
 - Dificuldade fixa do computador: O computador controla a barra com uma dificuldade fixa, o que significa que não há opções para ajustar o nível de dificuldade do oponente controlado
 
+
 ## Oque pode ser feito com o projeto?
-- Edite, melhore, faça oque achar melhor!
+- Edite, melhore, corrija os bugs, faça oque achar melhor!
 - Entre em contato comigo pelo instagram gabriel_j.santos_ ou pelo link:
 [![Instagram](https://img.shields.io/badge/Instagram-Follow%20Me-%23E4405F?logo=instagram)](https://instagram.com/gabriel_j.santos_?igshid=NTc4MTIwNjQ2YQ==)

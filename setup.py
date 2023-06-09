@@ -57,7 +57,7 @@ color_line_division = (255, 255, 255)  # cor das linhas de divisão
 
 
 #Outras variáveis:
-background_color = (10, 10, 10)  # cor de fundo da tela
+background_color = (0, 0, 0)  # cor de fundo da tela
 collision_prediction_fluctuation = 35  # flutuação de previsão de colisão
 fluctuation_of_collision_prediction_fluctuation = 40  # flutuação da flutuação de previsão de colisão
 
